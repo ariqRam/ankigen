@@ -3,9 +3,12 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/ikawaha/kagome-dict/ipa"
 	"github.com/ikawaha/kagome/v2/tokenizer"
+
+	"foosoft.net/projects/jmdict"
 )
 
 func main() {
@@ -24,8 +27,18 @@ func main() {
 	// wakati
 	fmt.Println("---wakati---")
 	seg := t.Wakati(sentence)
-	for _, word := range seg {
-		fmt.Println(word)
+	fmt.Println(seg)
+
+	reader := strings.NewReader("東京")
+
+	dict, res, err := jmdict.LoadJmdict(reader)
+
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(dict)
+	for k, v := range res {
+		fmt.Println(k, "value is", v)
 	}
 
 	// tokenize

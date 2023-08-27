@@ -1,3 +1,5 @@
+foosoft.net/projects/jmdict v0.0.0-20220714211640-cc9bc30b68a3 h1:zjHGpgUR2WP3pf6NVZM38OKYNse0GjovCW2v23V72PQ=
+foosoft.net/projects/jmdict v0.0.0-20220714211640-cc9bc30b68a3/go.mod h1:ZrjLCcE7ZrND28ZOSGYMd78tL+Dffiv2g+NjOMKgnew=
 github.com/ikawaha/kagome-dict v1.0.9 h1:1Gg735LbBYsdFu13fdTvW6eVt0qIf5+S2qXGJtlG8C0=
 github.com/ikawaha/kagome-dict v1.0.9/go.mod h1:mn9itZLkFb6Ixko7q8eZmUabHbg3i9EYewnhOtvd2RM=
 github.com/ikawaha/kagome-dict/ipa v1.0.10 h1:wk9I21yg+fKdL6HJB9WgGiyXIiu1VttumJwmIRwn0g8=
