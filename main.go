@@ -1,44 +1,40 @@
 package main
 
 import (
+	"encoding/xml"
 	"fmt"
+	"io/ioutil"
 	"os"
-	"strings"
 
-	"github.com/ikawaha/kagome-dict/ipa"
-	"github.com/ikawaha/kagome/v2/tokenizer"
-
-	"foosoft.net/projects/jmdict"
+	"github.com/ramdhanyA/ankigen/utils"
 )
 
 func main() {
-	t, err := tokenizer.New(ipa.Dict(), tokenizer.OmitBosEos())
-	if err != nil {
-		panic(err)
-	}
 
-	dat, err := os.ReadFile("./input.txt")
-	if err != nil {
-		panic(err)
-	}
-
-	sentence := string(dat)
-
-	// wakati
-	fmt.Println("---wakati---")
-	seg := t.Wakati(sentence)
-	fmt.Println(seg)
-
-	reader := strings.NewReader("東京")
-
-	dict, res, err := jmdict.LoadJmdict(reader)
+	xmlFile, err := os.Open("./JMdict_e.xml")
 
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(dict)
-	for k, v := range res {
-		fmt.Println(k, "value is", v)
+
+	defer xmlFile.Close()
+
+	// processed := utils.Tokenize("./input.txt")
+
+	// fmt.Println(processed)
+
+	byteValue, _ := ioutil.ReadAll(xmlFile)
+	var dict utils.JMdict
+
+	err = xml.Unmarshal(byteValue, &dict)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(dict.Entries)
+
+	for i := 0; i < len(dict.Entries); i++ {
+		fmt.Println(dict.Entries[i])
 	}
 
 	// tokenize
