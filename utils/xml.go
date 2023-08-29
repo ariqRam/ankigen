@@ -24,7 +24,7 @@ type ReadingElement struct {
 
 type Sense struct {
 	XMLName xml.Name `xml:"sense"`
-	Gloss   string   `xml:"gloss"`
+	Glosses []string `xml:"gloss"`
 }
 
 type KElement struct {
