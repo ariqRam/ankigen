@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/ramdhanyA/ankigen/utils"
+	"golang.org/x/exp/slices"
 )
 
 func main() {
@@ -34,5 +35,7 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(dict.Entries[38792])
+	idx := slices.IndexFunc(dict.Entries, func(e utils.Entry) bool { return e.KElement.Keb == "全部" })
+
+	fmt.Println(dict.Entries[idx])
 }
