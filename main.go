@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
@@ -26,22 +27,12 @@ func main() {
 	byteValue, _ := ioutil.ReadAll(xmlFile)
 	var dict utils.JMdict
 
-	err = xml.Unmarshal(byteValue, &dict)
+	d := xml.NewDecoder(bytes.NewReader(byteValue))
+	d.Strict = false
+	err = d.Decode(&dict)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(dict.Entries)
-
-	for i := 0; i < len(dict.Entries); i++ {
-		fmt.Println(dict.Entries[i])
-	}
-
-	// tokenize
-	// fmt.Println("---tokenize---")
-	// tokens := t.Tokenize("すもももももももものうち")
-	// for _, token := range tokens {
-	// 	features := strings.Join(token.Features(), ",")
-	// 	fmt.Printf("%s\t%v\n", token.Surface, features)
-	// }
+	fmt.Println(dict.Entries[0])
 }
