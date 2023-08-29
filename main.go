@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 
 	"github.com/ramdhanyA/ankigen/utils"
@@ -24,7 +24,7 @@ func main() {
 
 	// fmt.Println(processed)
 
-	byteValue, _ := ioutil.ReadAll(xmlFile)
+	byteValue, _ := io.ReadAll(xmlFile)
 	var dict utils.JMdict
 
 	d := xml.NewDecoder(bytes.NewReader(byteValue))
