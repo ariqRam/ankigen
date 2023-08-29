@@ -34,5 +34,5 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(dict.Entries[0])
+	fmt.Println(dict.Entries[206000])
 }
