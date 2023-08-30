@@ -37,7 +37,13 @@ func main() {
 
 	for _, element := range processed {
 		idx := slices.IndexFunc(dict.Entries, func(e utils.Entry) bool { return e.KElement.Keb == element })
-		fmt.Println(dict.Entries[idx].Sense.Glosses)
+		if idx == -1 {
+			continue
+		}
+
+		entry := dict.Entries[idx]
+
+		fmt.Println(entry.KElement.Keb, entry.ReadingElement.Reb, entry.Sense.Glosses)
 	}
 
 }
