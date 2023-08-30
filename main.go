@@ -13,6 +13,8 @@ import (
 
 func main() {
 
+	utils.Tessy()
+
 	xmlFile, err := os.Open("./JMdict_e.xml")
 
 	if err != nil {
