@@ -20,14 +20,17 @@ type Entry struct {
 type ReadingElement struct {
 	XMLName xml.Name `xml:"r_ele"`
 	Reb     string   `xml:"reb"`
+	Repri   []string `xml:"re_pri"`
 }
 
 type Sense struct {
 	XMLName xml.Name `xml:"sense"`
 	Glosses []string `xml:"gloss"`
+	Poses   []string `xml:"pos"`
 }
 
 type KElement struct {
 	XMLName xml.Name `xml:"k_ele"`
 	Keb     string   `xml:"keb"`
+	Kepri   []string `xml:"ke_pri"`
 }
