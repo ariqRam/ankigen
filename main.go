@@ -21,9 +21,9 @@ func main() {
 
 	defer xmlFile.Close()
 
-	// processed := utils.Tokenize("./input.txt")
+	processed := utils.Tokenize("./input.txt")
 
-	// fmt.Println(processed)
+	fmt.Println(processed)
 
 	byteValue, _ := io.ReadAll(xmlFile)
 	var dict utils.JMdict
@@ -35,7 +35,9 @@ func main() {
 		panic(err)
 	}
 
-	idx := slices.IndexFunc(dict.Entries, func(e utils.Entry) bool { return e.KElement.Keb == "全部" })
+	for _, element := range processed {
+		idx := slices.IndexFunc(dict.Entries, func(e utils.Entry) bool { return e.KElement.Keb == element })
+		fmt.Println(dict.Entries[idx].Sense.Glosses)
+	}
 
-	fmt.Println(dict.Entries[idx])
 }
