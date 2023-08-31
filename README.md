@@ -6,3 +6,6 @@ The tokenizer used in this project is [Ikawaha's Kagome](github.com/ikawaha/kago
 
 # JMdict
 [JMdict](https://www.edrdg.org/jmdict/) is the dictionary used in this project.
+
+# Gosseract OCR
+A Tesseract wrapper for Go, [Gosseract](github.com/otiai10/gosseract)
