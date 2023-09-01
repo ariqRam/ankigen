@@ -18,7 +18,7 @@ func Tessy() {
 		panic(err)
 	}
 	defer client.Close()
-	client.SetImage("./image-jp.png")
+	client.SetImage("./hard-stock.png")
 	text, err := client.Text()
 	if err != nil {
 		panic(err)
