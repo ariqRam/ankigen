@@ -13,7 +13,5 @@ def lookup(word: str):
         except AttributeError:
             continue
 
-print(lookup("全部").find("ent_seq").text)
-
-for i in lookup("全部").iterfind("gloss"):
-    print(i)
+for idx, expl in zip(range(1,5), lookup("全部").find("sense").findall("gloss")):
+    print(f"{idx} - {expl.text}")
