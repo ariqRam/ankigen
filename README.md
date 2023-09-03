@@ -1,8 +1,6 @@
 # AnkiGen
 A module to generate anki flashcards from images.
-
-# Status
-Under rewriting from Go to Python.
+日本語の説明は[こちら](github.com/ramdhanyA/ankigen/README-ja.mc)。
 
 #  Ikawaha/Kagome
 The tokenizer used in this project is [Ikawaha's Kagome](github.com/ikawaha/kagome).
