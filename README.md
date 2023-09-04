@@ -7,3 +7,6 @@ The tokenizer used in this project is [Ikawaha's Kagome](github.com/ikawaha/kago
 
 # JMdict
 [JMdict](https://www.edrdg.org/jmdict/) is the dictionary used in this project.
+
+# MLKit Vision
+The OCR program is using Google's [ML Kit](https://developers.google.com/ml-kit)
