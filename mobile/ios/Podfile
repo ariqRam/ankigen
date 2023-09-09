@@ -42,3 +42,5 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 end
+
+pod 'GoogleMLKit/TextRecognitionJapanese', '~> 4.0.0'
