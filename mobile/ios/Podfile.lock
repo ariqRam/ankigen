@@ -77,6 +77,10 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - ObjectBox (1.8.1)
+  - objectbox_flutter_libs (0.0.1):
+    - Flutter
+    - ObjectBox (= 1.8.1)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -90,6 +94,7 @@ DEPENDENCIES:
   - GoogleMLKit/TextRecognitionJapanese (~> 4.0.0)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - mecab_dart (from `.symlinks/plugins/mecab_dart/ios`)
+  - objectbox_flutter_libs (from `.symlinks/plugins/objectbox_flutter_libs/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
 
 SPEC REPOS:
@@ -107,6 +112,7 @@ SPEC REPOS:
     - MLKitTextRecognitionJapanese
     - MLKitVision
     - nanopb
+    - ObjectBox
     - PromisesObjC
 
 EXTERNAL SOURCES:
@@ -122,6 +128,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   mecab_dart:
     :path: ".symlinks/plugins/mecab_dart/ios"
+  objectbox_flutter_libs:
+    :path: ".symlinks/plugins/objectbox_flutter_libs/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
@@ -145,6 +153,8 @@ SPEC CHECKSUMS:
   MLKitTextRecognitionJapanese: bbcaa15796ca9a1f42e3191e57468beb51b1035e
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  ObjectBox: a7900d5335218cd437cbc080b7ccc38a5211f7b4
+  objectbox_flutter_libs: 61d74196d924fbc773da5f5757d1e9fab7b3cc78
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
 

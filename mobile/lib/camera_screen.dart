@@ -27,10 +27,18 @@ class _CameraScreenState extends State<CameraScreen> {
 
     _controller = CameraController(
       firstCamera,
-      ResolutionPreset.medium,
+      ResolutionPreset.high,
     );
 
     return _controller.initialize();
+  }
+
+  Future<void> _enableContinuousAutoFocus() async {
+    try {
+      await _controller.setFocusMode(FocusMode.auto);
+    } catch (e) {
+      print("Error enabling continuous autofocus: $e");
+    }
   }
 
   @override
@@ -56,35 +64,45 @@ class _CameraScreenState extends State<CameraScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera),
-        onPressed: () async {
-          try {
-            await _initializeControllerFuture;
-            final image = await _controller.takePicture();
-            final inputImage = InputImage.fromFilePath(image.path);
-            final textRecognizer =
-                TextRecognizer(script: TextRecognitionScript.japanese);
-            final recognizedText =
-                await textRecognizer.processImage(inputImage);
-            final tagger = Mecab();
-            await tagger.init("assets/ipadic", true);
-            final tokenizedText = tagger.parse(recognizedText.text);
-            // If the picture was taken, display it on a new screen.
-            await Navigator.of(currentContext).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayImageScreen(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
-                  imagePath: image.path,
-                  tokenizedText: tokenizedText,
-                ),
-              ),
-            );
-          } catch (e) {
-            print("Error taking picture: $e");
-          }
-        },
+      floatingActionButton: Row(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              _enableContinuousAutoFocus();
+            },
+            child: Text('Enable Continuous Autofocus'),
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.camera),
+            onPressed: () async {
+              try {
+                await _initializeControllerFuture;
+                final image = await _controller.takePicture();
+                final inputImage = InputImage.fromFilePath(image.path);
+                final textRecognizer =
+                    TextRecognizer(script: TextRecognitionScript.japanese);
+                final recognizedText =
+                    await textRecognizer.processImage(inputImage);
+                final tagger = Mecab();
+                await tagger.init("assets/ipadic", true);
+                final tokenizedText = tagger.parse(recognizedText.text);
+                // If the picture was taken, display it on a new screen.
+                await Navigator.of(currentContext).push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplayImageScreen(
+                      // Pass the automatically generated path to
+                      // the DisplayPictureScreen widget.
+                      imagePath: image.path,
+                      tokenizedText: tokenizedText,
+                    ),
+                  ),
+                );
+              } catch (e) {
+                print("Error taking picture: $e");
+              }
+            },
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

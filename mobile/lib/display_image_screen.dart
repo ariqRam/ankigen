@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ankigen/kotoba_list.dart';
 import 'package:flutter/material.dart';
 import 'package:mecab_dart/mecab_dart.dart';
 
@@ -12,25 +13,28 @@ class DisplayImageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentContext = context;
     return Scaffold(
         appBar: AppBar(title: const Text('Display the Picture')),
         // The image is stored as a file on the device. Use the `Image.file`
         // constructor with the given path to display the image.
         body: Column(
           children: [
-            Image.file(File(imagePath)),
-            SizedBox(
-              height: 200,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: tokenizedText.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    dense: true,
-                    title: Text(tokenizedText.elementAt(index).surface),
-                  );
-                },
+            Center(
+              child: SizedBox(
+                height: 650,
+                child: Image.file(File(imagePath)),
               ),
+            ),
+            TextButton(
+              onPressed: () async {
+                await Navigator.of(currentContext).push(
+                  MaterialPageRoute(
+                    builder: (context) => KotobaList(list: tokenizedText),
+                  ),
+                );
+              },
+              child: const Text("See Result"),
             ),
           ],
         ));
