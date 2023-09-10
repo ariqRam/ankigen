@@ -25,6 +25,17 @@ class _KotobaListState extends State<KotobaList> {
 
   @override
   Widget build(BuildContext context) {
+    final gloss = widget.list.map(
+      (word) => {
+        JMDict()
+            .search(keyword: word.surface, limit: 1)?[0]
+            .senseElements
+            .first
+            .glossaries
+            .first
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(title: const Text("List of Words")),
       body: FutureBuilder<void>(
@@ -37,12 +48,7 @@ class _KotobaListState extends State<KotobaList> {
                 return ListTile(
                   dense: true,
                   title: Text(widget.list.elementAt(index).surface),
-                  subtitle: Text(JMDict()
-                      .search(keyword: widget.list.elementAt(index).surface)!
-                      .first
-                      .senseElements
-                      .elementAt(0)
-                      .toString()),
+                  subtitle: Text(gloss.elementAtOrNull(index).toString()),
                 );
               },
             );
