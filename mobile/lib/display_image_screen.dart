@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mecab_dart/mecab_dart.dart';
 
 class DisplayImageScreen extends StatelessWidget {
   final String imagePath;
-  final String recognizedText;
+  final List<TokenNode> tokenizedText;
 
   const DisplayImageScreen(
-      {super.key, required this.imagePath, required this.recognizedText});
+      {super.key, required this.imagePath, required this.tokenizedText});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,19 @@ class DisplayImageScreen extends StatelessWidget {
         body: Column(
           children: [
             Image.file(File(imagePath)),
-            Text(recognizedText),
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: tokenizedText.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    dense: true,
+                    title: Text(tokenizedText.elementAt(index).surface),
+                  );
+                },
+              ),
+            ),
           ],
         ));
   }

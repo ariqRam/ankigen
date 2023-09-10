@@ -42,6 +42,7 @@ dependencies:
   path_provider: ^2.1.1
   path: ^1.8.3
   image_picker: ^1.0.4
+  mecab_dart: ^0.1.6
 
 dev_dependencies:
   flutter_test:
@@ -66,8 +67,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/ipadic/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

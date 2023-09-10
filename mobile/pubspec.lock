@@ -312,6 +312,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
+  mecab_dart:
+    dependency: "direct main"
+    description:
+      name: mecab_dart
+      sha256: "3a182791d5a21bbea3aeb7ad155718f4d26d0b99e0e656cadaca703d433cc0aa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
   meta:
     dependency: transitive
     description:

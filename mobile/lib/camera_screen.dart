@@ -1,7 +1,9 @@
 import 'package:ankigen/display_image_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:mecab_dart/mecab_dart.dart';
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -65,7 +67,9 @@ class _CameraScreenState extends State<CameraScreen> {
                 TextRecognizer(script: TextRecognitionScript.japanese);
             final recognizedText =
                 await textRecognizer.processImage(inputImage);
-
+            final tagger = Mecab();
+            await tagger.init("assets/ipadic", true);
+            final tokenizedText = tagger.parse(recognizedText.text);
             // If the picture was taken, display it on a new screen.
             await Navigator.of(currentContext).push(
               MaterialPageRoute(
@@ -73,7 +77,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   // Pass the automatically generated path to
                   // the DisplayPictureScreen widget.
                   imagePath: image.path,
-                  recognizedText: recognizedText.text,
+                  tokenizedText: tokenizedText,
                 ),
               ),
             );
