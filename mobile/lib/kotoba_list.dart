@@ -28,11 +28,15 @@ class _KotobaListState extends State<KotobaList> {
     final gloss = widget.list.map(
       (word) => {
         JMDict()
-            .search(keyword: word.surface, limit: 1)?[0]
-            .senseElements
-            .first
-            .glossaries
-            .first
+                .search(keyword: word.surface, limit: 1)
+                ?.first
+                .senseElements
+                .first
+                .glossaries
+                .first ??
+            SenseElement({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {"Not Found"})
+                .glossaries
+                .first
       },
     );
 
@@ -48,7 +52,7 @@ class _KotobaListState extends State<KotobaList> {
                 return ListTile(
                   dense: true,
                   title: Text(widget.list.elementAt(index).surface),
-                  subtitle: Text(gloss.elementAtOrNull(index).toString()),
+                  subtitle: Text(gloss.first.first.text),
                 );
               },
             );
