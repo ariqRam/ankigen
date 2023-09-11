@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:jm_dict/jm_dict.dart';
 import 'package:mecab_dart/mecab_dart.dart';
@@ -26,10 +28,7 @@ class _KotobaListState extends State<KotobaList> {
   @override
   Widget build(BuildContext context) {
     final gloss = widget.list.map(
-      (word) => {
-        JMDict().search(keyword: word.surface, limit: 1) ??
-            JMDict().search(keyword: "ばか", limit: 1)
-      },
+      (word) => {JMDict().search(keyword: word.surface, limit: 1)},
     );
 
     Widget buildItem(int index) {
