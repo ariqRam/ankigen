@@ -27,18 +27,23 @@ class _CameraScreenState extends State<CameraScreen> {
 
     _controller = CameraController(
       firstCamera,
-      ResolutionPreset.high,
+      ResolutionPreset.medium,
     );
 
     return _controller.initialize();
   }
 
-  Future<void> _enableContinuousAutoFocus() async {
-    try {
-      await _controller.setFocusMode(FocusMode.auto);
-    } catch (e) {
-      print("Error enabling continuous autofocus: $e");
+  Future<void> onTap(TapDownDetails details, BoxConstraints constraints) async {
+    final camera = _controller;
+    if (!camera.value.isInitialized) {
+      return;
     }
+    final x = details.localPosition.dx / constraints.maxWidth;
+    final y = details.localPosition.dy / constraints.maxHeight;
+    final point = Offset(x, y);
+    print(point);
+    await camera.lockCaptureOrientation();
+    await camera.setFocusPoint(point);
   }
 
   @override
@@ -58,7 +63,14 @@ class _CameraScreenState extends State<CameraScreen> {
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller);
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return GestureDetector(
+                  onTapDown: (details) => onTap(details, constraints),
+                  child: CameraPreview(_controller),
+                );
+              },
+            );
           } else {
             return Center(child: CircularProgressIndicator());
           }
@@ -66,12 +78,6 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
       floatingActionButton: Row(
         children: [
-          ElevatedButton(
-            onPressed: () {
-              _enableContinuousAutoFocus();
-            },
-            child: Text('Enable Continuous Autofocus'),
-          ),
           FloatingActionButton(
             child: Icon(Icons.camera),
             onPressed: () async {
@@ -86,6 +92,9 @@ class _CameraScreenState extends State<CameraScreen> {
                 final tagger = Mecab();
                 await tagger.init("assets/ipadic", true);
                 final tokenizedText = tagger.parse(recognizedText.text);
+                tokenizedText.forEach((element) {
+                  print(element.surface);
+                });
                 // If the picture was taken, display it on a new screen.
                 await Navigator.of(currentContext).push(
                   MaterialPageRoute(
