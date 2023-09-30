@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:jm_dict_en/jm_dict_en.dart';
 import 'package:mecab_dart/mecab_dart.dart';
@@ -19,7 +21,9 @@ class _KotobaListState extends State<KotobaList> {
   }
 
   Future<Dictionary> _initializeDict() async {
-    return Dictionary.fromXmlPath("assets/JMdict.xml");
+    final file = File("assets/JMdict_e.xml");
+    final contents = await file.readAsString();
+    return Dictionary.fromXmlString(contents);
   }
 
   @override
