@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mecab_dart/mecab_dart.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -19,6 +20,44 @@ class _CameraScreenState extends State<CameraScreen> {
   void initState() {
     super.initState();
     _initializeControllerFuture = _initializeCamera();
+  }
+
+  XFile? _image;
+
+  Future<void> _getImage(currentContext) async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+    });
+
+    try {
+      await _initializeControllerFuture;
+      final image = await _controller.takePicture();
+      final inputImage = InputImage.fromFilePath(image.path);
+      final textRecognizer =
+          TextRecognizer(script: TextRecognitionScript.japanese);
+      final recognizedText = await textRecognizer.processImage(inputImage);
+      final tagger = Mecab();
+      await tagger.init("assets/ipadic", true);
+      final tokenizedText = tagger.parse(recognizedText.text);
+      tokenizedText.forEach((element) {
+        print("element: " + element.surface);
+      });
+      await Navigator.of(currentContext).push(
+        MaterialPageRoute(
+          builder: (context) => DisplayImageScreen(
+            // Pass the automatically generated path to
+            // the DisplayPictureScreen widget.
+            imagePath: _image!.path,
+            tokenizedText: tokenizedText,
+          ),
+        ),
+      );
+    } catch (e) {
+      print("Error taking picture: $e");
+    }
   }
 
   Future<void> _initializeCamera() async {
@@ -80,40 +119,46 @@ class _CameraScreenState extends State<CameraScreen> {
         children: [
           FloatingActionButton(
             child: Icon(Icons.camera),
-            onPressed: () async {
-              try {
-                await _initializeControllerFuture;
-                final image = await _controller.takePicture();
-                final inputImage = InputImage.fromFilePath(image.path);
-                final textRecognizer =
-                    TextRecognizer(script: TextRecognitionScript.japanese);
-                final recognizedText =
-                    await textRecognizer.processImage(inputImage);
-                final tagger = Mecab();
-                await tagger.init("assets/ipadic", true);
-                final tokenizedText = tagger.parse(recognizedText.text);
-                tokenizedText.forEach((element) {
-                  print(element.surface);
-                });
-                // If the picture was taken, display it on a new screen.
-                await Navigator.of(currentContext).push(
-                  MaterialPageRoute(
-                    builder: (context) => DisplayImageScreen(
-                      // Pass the automatically generated path to
-                      // the DisplayPictureScreen widget.
-                      imagePath: image.path,
-                      tokenizedText: tokenizedText,
-                    ),
-                  ),
-                );
-              } catch (e) {
-                print("Error taking picture: $e");
-              }
-            },
+            onPressed: () => {_capturePic(currentContext)},
+          ),
+          FloatingActionButton(
+            onPressed: () => {_getImage(currentContext)},
+            tooltip: 'Pick Image',
+            child: Icon(Icons.add_a_photo),
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
+  }
+
+  void _capturePic(currentContext) async {
+    try {
+      await _initializeControllerFuture;
+      final image = await _controller.takePicture();
+      final inputImage = InputImage.fromFilePath(image.path);
+      final textRecognizer =
+          TextRecognizer(script: TextRecognitionScript.japanese);
+      final recognizedText = await textRecognizer.processImage(inputImage);
+      final tagger = Mecab();
+      await tagger.init("assets/ipadic", true);
+      final tokenizedText = tagger.parse(recognizedText.text);
+      tokenizedText.forEach((element) {
+        print(element.surface);
+      });
+      // If the picture was taken, display it on a new screen.
+      await Navigator.of(currentContext).push(
+        MaterialPageRoute(
+          builder: (context) => DisplayImageScreen(
+            // Pass the automatically generated path to
+            // the DisplayPictureScreen widget.
+            imagePath: image.path,
+            tokenizedText: tokenizedText,
+          ),
+        ),
+      );
+    } catch (e) {
+      print("Error taking picture: $e");
+    }
   }
 }

@@ -328,6 +328,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  jm_dict_en:
+    dependency: "direct main"
+    description:
+      name: jm_dict_en
+      sha256: ef9fa7617c9b8cc2a7563f72d3d69c426d007d26fbd8fda6301fd0db43a6975a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.3"
   js:
     dependency: transitive
     description:

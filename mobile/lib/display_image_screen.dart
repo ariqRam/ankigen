@@ -22,7 +22,7 @@ class DisplayImageScreen extends StatelessWidget {
           children: [
             Center(
               child: SizedBox(
-                height: 650,
+                height: 100,
                 child: Image.file(File(imagePath)),
               ),
             ),

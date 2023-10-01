@@ -1,8 +1,22 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:jm_dict/jm_dict.dart';
+import 'package:jm_dict_en/jm_dict_en.dart';
 import 'package:mecab_dart/mecab_dart.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+
+Future<File> copyAssetToFileSystem(String assetPath) async {
+  final byteData = await rootBundle.load(assetPath);
+
+  final directory =
+      await getTemporaryDirectory(); // or getApplicationDocumentsDirectory()
+  final file = File('${directory.path}/my_asset.txt');
+
+  return file.writeAsBytes(byteData.buffer.asUint8List());
+}
 
 class KotobaList extends StatefulWidget {
   final List<TokenNode> list;
@@ -13,63 +27,52 @@ class KotobaList extends StatefulWidget {
 }
 
 class _KotobaListState extends State<KotobaList> {
-  late Future<void> _dict;
-
   @override
   void initState() {
     super.initState();
-    _dict = _initializeDict();
   }
 
-  Future<void> _initializeDict() async {
-    return JMDict().initFromAsset(assetPath: "assets/JMdict.gz");
+  Future<Dictionary> _initializeDict() async {
+    final file = await copyAssetToFileSystem('assets/JMdict_e.xml');
+    final contents = await file.readAsString();
+    return Dictionary.fromXmlString(contents);
   }
 
   @override
   Widget build(BuildContext context) {
-    final gloss = widget.list.map(
-      (word) => {JMDict().search(keyword: word.surface, limit: 1)},
-    );
+    Widget buildItem(int index, Dictionary dict) {
+      final gloss = (widget.list).map((word) => dict.search(word.surface));
+      final entry = gloss.elementAt(index);
 
-    Widget buildItem(int index) {
-      final element = gloss.elementAt(index);
-      if (element != null && element.isNotEmpty) {
-        final firstElement = element.first;
-        if (firstElement != null && firstElement.isNotEmpty) {
-          final firstSenseElement = firstElement.first;
-          if (firstSenseElement != null) {
-            final sense = firstSenseElement.senseElements;
-            if (sense != null && sense.isNotEmpty) {
-              final glossaries = sense.first.glossaries;
-              if (glossaries != null && glossaries.isNotEmpty) {
-                final text = glossaries.first.text;
-                if (text != null) {
-                  return Text(text);
-                }
-              }
-            }
-          }
-        }
-      }
-      return Text("Not Found");
+      return Text(entry.gloss.elementAtOrNull(0) ?? '');
     }
 
     return Scaffold(
       appBar: AppBar(title: const Text("List of Words")),
-      body: FutureBuilder<void>(
-          future: _dict,
+      body: FutureBuilder<Dictionary>(
+          future: _initializeDict(),
           builder: (context, snapshot) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.list.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  dense: true,
-                  title: Text(widget.list.elementAt(index).surface),
-                  subtitle: buildItem(index),
-                );
-              },
-            );
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              final dict = snapshot.data;
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: widget.list.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    dense: true,
+                    title: Text(widget.list.elementAt(index).surface),
+                    subtitle: buildItem(
+                      index,
+                      dict!,
+                    ),
+                  );
+                },
+              );
+            }
           }),
     );
   }
