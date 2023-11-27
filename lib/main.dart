@@ -1,6 +1,4 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:newankigen/camera_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,19 +38,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Home Page")),
-      body: SafeArea(
-        child: Center(
-            child: ElevatedButton(
-          onPressed: () async {
-            await availableCameras().then((List<CameraDescription> value) =>
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => CameraPage(camera: value.first))));
-          },
-          child: const Text("Take a Picture"),
-        )),
-      ),
+      body: const Center(child: Text('Hello')),
     );
   }
 }

@@ -4,7 +4,7 @@
             "outputFile": "com.example.newankigen.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/740093/Documents/Ariq/Dev/personal/newankigen/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/home/noctore/Dev/personal/ankigen/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

@@ -4,7 +4,7 @@
             "outputFile": "com.example.newankigen.app-mergeDebugResources-9:/values-mk/values-mk.xml",
             "map": [
                 {
-                    "source": "/Users/740093/.gradle/caches/transforms-3/7e9df2ac2213a6bd3cef0f2f27870d79/transformed/core-1.6.0/res/values-mk/values-mk.xml",
+                    "source": "/home/noctore/.gradle/caches/transforms-3/7e9df2ac2213a6bd3cef0f2f27870d79/transformed/core-1.6.0/res/values-mk/values-mk.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
