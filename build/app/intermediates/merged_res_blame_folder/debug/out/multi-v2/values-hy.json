@@ -4,7 +4,7 @@
             "outputFile": "com.example.newankigen.app-mergeDebugResources-9:/values-hy/values-hy.xml",
             "map": [
                 {
-                    "source": "/home/noctore/.gradle/caches/transforms-3/7e9df2ac2213a6bd3cef0f2f27870d79/transformed/core-1.6.0/res/values-hy/values-hy.xml",
+                    "source": "/Users/740093/.gradle/caches/transforms-3/7e9df2ac2213a6bd3cef0f2f27870d79/transformed/core-1.6.0/res/values-hy/values-hy.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

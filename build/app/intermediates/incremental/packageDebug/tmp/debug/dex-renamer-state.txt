@@ -1,13 +1,13 @@
-#Sun Nov 19 08:54:19 JST 2023
-base.0=/home/noctore/Dev/personal/ankigen/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
-base.1=/home/noctore/Dev/personal/ankigen/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
-base.2=/home/noctore/Dev/personal/ankigen/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.3=/home/noctore/Dev/personal/ankigen/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
-path.0=classes.dex
-path.1=0/classes.dex
-path.2=0/classes.dex
+#Wed Nov 29 19:48:48 JST 2023
 path.3=1/classes.dex
-renamed.0=classes.dex
-renamed.1=classes2.dex
-renamed.2=classes3.dex
+path.2=0/classes.dex
+path.1=0/classes.dex
+path.0=classes.dex
+base.3=/Users/740093/Documents/Ariq/Dev/personal/newankigen/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
+base.2=/Users/740093/Documents/Ariq/Dev/personal/newankigen/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.1=/Users/740093/Documents/Ariq/Dev/personal/newankigen/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
+base.0=/Users/740093/Documents/Ariq/Dev/personal/newankigen/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
