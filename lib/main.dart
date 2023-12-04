@@ -35,39 +35,74 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Home Page")),
-      body: FutureBuilder<List<Entry>>(
-        future: entries(),
-        builder: (context, snapshot) {
-          Stopwatch stopwatch = Stopwatch()..start();
-          if (snapshot.connectionState == ConnectionState.done) {
-            stopwatch.stop(); // Stop the stopwatch when rendering is completed
-            Duration renderDuration = stopwatch.elapsed; // Get the elapsed time
-            Fluttertoast.showToast(
-              msg: "Rendering completed in ${renderDuration.inSeconds}s!",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-            );
-            final items = snapshot.data ?? [];
-            return ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(items[index].reb ?? ''),
-                );
+      body: Column(
+        children: [
+          TextField(
+            decoration: const InputDecoration(labelText: 'Search'),
+            controller: _controller,
+            onChanged: (String keyword) {
+              setState(() {
+                _controller.text = keyword;
+              });
+            },
+          ),
+          Expanded(
+            child: FutureBuilder<List<Entry>>(
+              future: _controller.text != ''
+                  ? entriesByKeb(_controller.text)
+                  : entries(),
+              builder: (context, snapshot) {
+                Stopwatch stopwatch = Stopwatch()..start();
+                if (snapshot.connectionState == ConnectionState.done) {
+                  stopwatch
+                      .stop(); // Stop the stopwatch when rendering is completed
+                  Duration renderDuration =
+                      stopwatch.elapsed; // Get the elapsed time
+                  Fluttertoast.showToast(
+                    msg: "Rendering completed in ${renderDuration.inSeconds}s!",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                  );
+                  final items = snapshot.data ?? [];
+                  return ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(items[index].reb ?? ''),
+                      );
+                    },
+                  );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return Text(
+                      'Error: ${snapshot.error}\n${snapshot.stackTrace}');
+                }
               },
-            );
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else {
-            return Text('Error: ${snapshot.error}\n${snapshot.stackTrace}');
-          }
-        },
+            ),
+          ),
+        ],
       ),
     );
   }

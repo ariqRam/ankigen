@@ -55,7 +55,26 @@ Future<List<Entry>> entries() async {
   final db = await initDatabase();
   final List<Map<String, dynamic>> maps = await db.query('entry');
 
-  print(json.decode(maps[0]['gloss']));
+  return List.generate(maps.length, (i) {
+    return Entry(
+      id: maps[i]['id'] as int,
+      reb: maps[i]['reb'] as String?,
+      keb: maps[i]['keb'] as String?,
+      gloss: (json.decode(maps[i]['gloss']) as List<dynamic>)
+          .map((e) => e as String?)
+          .toList(),
+      example: (json.decode(maps[i]['example']) as List<dynamic>)
+          .map((e) => e as String?)
+          .toList(),
+    );
+  });
+}
+
+Future<List<Entry>> entriesByKeb(String keb) async {
+  // Get a reference to the database.
+  final db = await initDatabase();
+  final List<Map<String, dynamic>> maps =
+      await db.query('entry', where: 'keb = ?', whereArgs: [keb], limit: 1);
   return List.generate(maps.length, (i) {
     return Entry(
       id: maps[i]['id'] as int,
