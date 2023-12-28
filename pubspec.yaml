@@ -41,6 +41,7 @@ dependencies:
   jm_dict_en: any
   sqflite: ^2.3.0
   fluttertoast: ^8.2.4
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

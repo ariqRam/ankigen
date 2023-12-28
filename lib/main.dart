@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:newankigen/entry.dart';
+import 'package:newankigen/classes/entry.dart';
+import 'package:newankigen/components/entry_card.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +53,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        clipBehavior: Clip.antiAlias,
+        child: ListView(
+          children: const [
+            ListTile(
+              title: Text("Placeholder"),
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(title: const Text("Home Page")),
       body: Column(
         children: [
@@ -89,6 +100,14 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: Text(items[index].keb ?? items[index].reb ?? ''),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    EntryCard(entry: items[index])),
+                          );
+                        },
                       );
                     },
                   );
