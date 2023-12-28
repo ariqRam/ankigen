@@ -73,8 +73,8 @@ Future<List<Entry>> entries() async {
 Future<List<Entry>> entriesByKeb(String keb) async {
   // Get a reference to the database.
   final db = await initDatabase();
-  final List<Map<String, dynamic>> maps =
-      await db.query('entry', where: 'keb = ?', whereArgs: [keb], limit: 1);
+  final List<Map<String, dynamic>> maps = await db.query('entry',
+      where: 'keb LIKE ? OR reb LIKE ?', whereArgs: ['$keb%', '$keb%']);
   return List.generate(maps.length, (i) {
     return Entry(
       id: maps[i]['id'] as int,

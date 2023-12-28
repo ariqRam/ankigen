@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(items[index].reb ?? ''),
+                        title: Text(items[index].keb ?? items[index].reb ?? ''),
                       );
                     },
                   );
